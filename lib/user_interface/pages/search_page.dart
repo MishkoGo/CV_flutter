@@ -86,26 +86,6 @@ class _SearchCurrencyBottomSheetState extends State<SearchCurrencyBottomSheet> {
     );
   }
 
-  List<Currency> _searchCurrencies(String searchText) {
-    if (searchText.isNotEmpty) {
-      _currenciesFound = _allCurrencies.where((element) {
-        if (element.currencyCode
-            .toLowerCase()
-            .contains(searchText.toLowerCase())) {
-          return true;
-        } else if (element.currencyName
-            .toLowerCase()
-            .contains(searchText.toLowerCase())) {
-          return true;
-        }
-        return false;
-      }).toList();
-    } else {
-      _currenciesFound = _allCurrencies;
-    }
-    return _currenciesFound;
-  }
-
   void _onTileTap(int index, CurrencyLoadedState state) {
     Navigator.of(context).pop();
     if (widget.isBaseCurrency) {
