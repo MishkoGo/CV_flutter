@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'currency_model.dart';
+import '../models/currency_model.dart';
 
 class CurrencyPair extends Equatable {
   final Currency baseCurrency;

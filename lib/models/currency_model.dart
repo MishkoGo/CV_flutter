@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
-import '../../core/consts/all_currencies.dart';
+import '../common/all_currencies.dart';
+
 
 class Currency extends Equatable {
   final String currencyCode;

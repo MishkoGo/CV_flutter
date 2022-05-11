@@ -7,8 +7,6 @@ abstract class CurrencyState extends Equatable {
   List<Object> get props => [];
 }
 
-class CurrencyLoadingState extends CurrencyState {}
-
 class CurrencyLoadedState extends CurrencyState {
   final CurrencyPair currencyPairModel;
 
@@ -24,12 +22,4 @@ class CurrencyLoadedState extends CurrencyState {
   factory CurrencyLoadedState.fromJson(Map<String, dynamic> json) {
     return CurrencyLoadedState(CurrencyPair.fromJson(json['value']));
   }
-}
-
-class CurrencyFailedState extends CurrencyState {
-  final String error;
-  const CurrencyFailedState({required this.error});
-
-  @override
-  List<Object> get props => [error];
 }

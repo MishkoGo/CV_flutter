@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../data/models/currency_model.dart';
+import '../../models/currency_model.dart';
 
 class CurrencyTile extends StatefulWidget {
   const CurrencyTile({

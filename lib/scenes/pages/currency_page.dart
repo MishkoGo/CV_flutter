@@ -1,23 +1,24 @@
+import 'package:CurrencyApp/scenes/pages/search_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_simple_calculator/flutter_simple_calculator.dart';
 import 'package:intl/intl.dart' as intl;
-import 'package:untitled1/user_interface/pages/search_page.dart';
+import 'package:CurrencyApp/scenes/pages/search_page.dart';
 import '../../currency_bloc/currency_bloc.dart';
-import '../../data/models/currency_model.dart';
-import '../../data/models/currency_pair.dart';
-import '../../data/repositories/currency_repository.dart';
+import '../../models/currency_model.dart';
+import '../../models/currency_pair.dart';
+import '../../repository/currency_repository.dart';
 import '../widgets/currency_tile.dart';
 
-class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+class CurrencyPage extends StatefulWidget {
+  const CurrencyPage({Key? key}) : super(key: key);
 
   @override
-  State<MainPage> createState() => _MainPageState();
+  State<CurrencyPage> createState() => _CurrencyPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _CurrencyPageState extends State<CurrencyPage> {
   final _currencyBloc = CurrencyBloc(currencyRepository: CurrencyRepository());
   final _baseTextEditingController = TextEditingController();
   final _toTextEditingController = TextEditingController();
@@ -34,10 +35,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (context) => _currencyBloc,
-        child: SafeArea(
-          child: BlocBuilder<CurrencyBloc, CurrencyState>(
+      body: BlocBuilder<CurrencyBloc, CurrencyState>(
             bloc: _currencyBloc,
             builder: (context, state) {
               if (state is CurrencyLoadedState) {
@@ -50,28 +48,19 @@ class _MainPageState extends State<MainPage> {
                     _calculator(),
                   ],
                 );
-              } else if (state is CurrencyFailedState) {
-                return Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 30, bottom: 10),
-                      child: Text(
-                        state.error,
-                        style: TextStyle()
-                            .copyWith(fontSize: 25),
+              } else {
+                return Center(
+                 child: Padding(
+                      padding: const EdgeInsets.all(40),
+                      child: Text('Сheck internet connection!', style: TextStyle().copyWith(fontSize: 25),
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    _calculator(),
-                  ],
                 );
               }
-              return Container();
             },
           ),
-        ),
-      ),
-    );
+        );
   }
 
   void _textControllers() {
@@ -158,7 +147,6 @@ class _MainPageState extends State<MainPage> {
                 decoration: const InputDecoration(
                   border: InputBorder.none,
                 ),
-                readOnly: true,
                 controller: isBaseCurrency == true
                     ? _baseTextEditingController
                     : _toTextEditingController,
