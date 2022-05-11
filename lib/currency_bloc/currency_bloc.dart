@@ -1,4 +1,3 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../models/currency_model.dart';
@@ -12,7 +11,7 @@ class CurrencyBloc extends Bloc<CurrencyEvent, CurrencyState> {
   static final CurrencyPair _mockData = CurrencyPair(
     baseCurrency: Currency.fromCode(currencyCode: 'USD'),
     toCurrency: Currency.fromCode(currencyCode: 'EUR'),
-    amount: 1,
+    amount: 10,
     lastUpdated: (DateTime.now().millisecondsSinceEpoch ~/ 1000),
     exchangeRate: 0.92,
     output: 1 * 0.92,
@@ -33,16 +32,4 @@ class CurrencyBloc extends Bloc<CurrencyEvent, CurrencyState> {
     ));
   }
 
-  @override
-  CurrencyState? fromJson(Map<String, dynamic> json) {
-    return CurrencyLoadedState.fromJson(json);
-  }
-
-  @override
-  Map<String, dynamic>? toJson(CurrencyState state) {
-    if (state is CurrencyLoadedState) {
-      return state.toJson();
-    }
-    return null;
-  }
 }

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_simple_calculator/flutter_simple_calculator.dart';
 import 'package:intl/intl.dart' as intl;
-import 'package:CurrencyApp/scenes/pages/search_page.dart';
 import '../../currency_bloc/currency_bloc.dart';
 import '../../models/currency_model.dart';
 import '../../models/currency_pair.dart';
@@ -19,6 +18,9 @@ class CurrencyPage extends StatefulWidget {
 }
 
 class _CurrencyPageState extends State<CurrencyPage> {
+
+
+
   final _currencyBloc = CurrencyBloc(currencyRepository: CurrencyRepository());
   final _baseTextEditingController = TextEditingController();
   final _toTextEditingController = TextEditingController();
@@ -45,7 +47,7 @@ class _CurrencyPageState extends State<CurrencyPage> {
                   children: [
                     SizedBox(height: 40,),
                     _currencyPair(),
-                    _calculator(),
+                    //_calculator(),
                   ],
                 );
               } else {
@@ -69,42 +71,6 @@ class _CurrencyPageState extends State<CurrencyPage> {
         currencyFormat.format(_currentCurrencyPair.amount);
     _toTextEditingController.text =
         currencyFormat.format(_currentCurrencyPair.output);
-  }
-
-  void _onClick(double? value) {
-    _currentCurrencyPair = _currentCurrencyPair.copyWith(
-        amount: value ?? 0,
-        output: ((value ?? 0) * _currentCurrencyPair.exchangeRate));
-    _currencyBloc.add(SwitchCurrenciesEvent(_currentCurrencyPair));
-  }
-
-  Widget _calculator() {
-    return Expanded(
-      flex: 1,
-      child: SimpleCalculator(
-        onChanged: (key, value, expression) => _onClick(value),
-        hideSurroundingBorder: true,
-        hideExpression: true,
-        theme: const CalculatorThemeData(
-          borderWidth: 10,
-            numColor: Colors.white,
-            operatorColor: Colors.white,
-            commandColor: Colors.white,
-            commandStyle: TextStyle(
-                fontSize: 20,
-              color: Colors.blue,
-            ),
-            operatorStyle: TextStyle(
-                fontSize: 20,
-              color: Colors.red
-            ),
-            numStyle: TextStyle(fontSize: 30, color: Colors.black),
-            displayStyle: TextStyle(
-                color: Colors.transparent,
-                fontSize: 0,
-            )),
-      ),
-    );
   }
 
   void _showModalBottomSheet(bool isBaseCurrency) {
@@ -139,6 +105,13 @@ class _CurrencyPageState extends State<CurrencyPage> {
           Expanded(
               flex: 1,
               child: TextField(
+                onSubmitted: (value) {
+                  _currentCurrencyPair = _currentCurrencyPair.copyWith(
+                      amount: double.tryParse(value) ?? 0,
+                      output: ((double.tryParse(value) ?? 0) * _currentCurrencyPair.exchangeRate));
+                  _currencyBloc.add(SwitchCurrenciesEvent(_currentCurrencyPair));
+                },
+                keyboardType: TextInputType.number,
                 textAlign: TextAlign.right,
                 style: TextStyle(
                   fontWeight: FontWeight.normal,

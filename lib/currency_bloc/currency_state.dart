@@ -1,6 +1,6 @@
 part of 'currency_bloc.dart';
 
-abstract class CurrencyState extends Equatable {
+class CurrencyState {
   const CurrencyState();
 
   @override

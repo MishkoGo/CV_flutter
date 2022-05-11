@@ -1,7 +1,6 @@
-import 'package:equatable/equatable.dart';
 import '../models/currency_model.dart';
 
-class CurrencyPair extends Equatable {
+class CurrencyPair {
   final Currency baseCurrency;
   final Currency toCurrency;
   final double amount;
@@ -9,7 +8,7 @@ class CurrencyPair extends Equatable {
   final double exchangeRate;
   final double output;
 
-  const CurrencyPair({
+  CurrencyPair({
     required this.baseCurrency,
     required this.toCurrency,
     required this.amount,

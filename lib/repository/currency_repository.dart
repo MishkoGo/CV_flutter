@@ -26,10 +26,8 @@ class CurrencyRepository {
   List<Currency> getAllCurrencies() {
     List<Currency> list = [];
     AllCurrencies.currencies.forEach((key, value) {
-      value.forEach((key2, value2) {
         list.add(
-            Currency(currencyName: key2, currencyCode: key));
-      });
+            Currency(currencyName: value, currencyCode: key));
     });
     return list;
   }

@@ -1,6 +1,6 @@
 part of 'currency_bloc.dart';
 
-abstract class CurrencyEvent extends Equatable {
+class CurrencyEvent {
   const CurrencyEvent();
 }
 

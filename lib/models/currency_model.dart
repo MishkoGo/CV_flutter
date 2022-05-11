@@ -1,12 +1,10 @@
-import 'package:equatable/equatable.dart';
 import '../common/all_currencies.dart';
 
-
-class Currency extends Equatable {
+class Currency {
   final String currencyCode;
   final String currencyName;
 
-  const Currency({
+  Currency({
     required this.currencyName,
     required this.currencyCode,
   });
@@ -19,8 +17,9 @@ class Currency extends Equatable {
   factory Currency.fromCode({required String currencyCode}) {
     final currencies = AllCurrencies.currencies;
     return Currency(
-      currencyName: currencies[currencyCode]!.entries.first.key,
-      currencyCode: currencies.keys.singleWhere((key) => key == currencyCode),
+      currencyName: currencies.values.first,
+      currencyCode: currencies.keys.singleWhere((key) => key == currencyCode)
+
     );
   }
 }

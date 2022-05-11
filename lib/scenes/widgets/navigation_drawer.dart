@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../pages/about_page.dart';
 
 class NavigationDrawerWidget extends StatelessWidget {
