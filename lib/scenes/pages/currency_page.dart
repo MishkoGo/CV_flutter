@@ -1,13 +1,11 @@
 import 'package:CurrencyApp/scenes/pages/search_page.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_simple_calculator/flutter_simple_calculator.dart';
 import 'package:intl/intl.dart' as intl;
-import '../../currency_bloc/currency_bloc.dart';
+import '../../bloc/currency_bloc/currency_bloc.dart';
+import '../../core/repository/currency_repository.dart';
 import '../../models/currency_model.dart';
 import '../../models/currency_pair.dart';
-import '../../repository/currency_repository.dart';
 import '../widgets/currency_tile.dart';
 
 class CurrencyPage extends StatefulWidget {
@@ -18,8 +16,6 @@ class CurrencyPage extends StatefulWidget {
 }
 
 class _CurrencyPageState extends State<CurrencyPage> {
-
-
 
   final _currencyBloc = CurrencyBloc(currencyRepository: CurrencyRepository());
   final _baseTextEditingController = TextEditingController();
@@ -43,26 +39,60 @@ class _CurrencyPageState extends State<CurrencyPage> {
               if (state is CurrencyLoadedState) {
                 _currentCurrencyPair = state.currencyPairModel;
                 _textControllers();
-                return Column(
-                  children: [
-                    SizedBox(height: 40,),
-                    _currencyPair(),
-                    //_calculator(),
-                  ],
+                _getLastUpdated();
+                return Padding(
+                  padding: const EdgeInsets.all(30.0),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 40,),
+                      Container(
+                        width: 350,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.indigo.withOpacity(0.3),
+                              spreadRadius: 2,
+                              blurRadius: 2,
+                              offset: Offset(0, 3)
+                            )
+                          ]
+                        ),
+                        child: _currencyPair(),
+                      ),
+                      SizedBox(height: 30),
+                      Center(
+                        child: Text(_getLastUpdated(), style: TextStyle(color: Colors.black),),
+                      )
+                    ],
+                  ),
                 );
-              } else {
+              } else if (state is CurrencyFailedState){
                 return Center(
                  child: Padding(
                       padding: const EdgeInsets.all(40),
-                      child: Text('Сheck internet connection!', style: TextStyle().copyWith(fontSize: 25),
+                      child: Text(
+                        state.error,
+                        style: TextStyle().copyWith(fontSize: 25),
                         textAlign: TextAlign.center,
                       ),
                     ),
                 );
               }
+              return Container();
             },
           ),
         );
+  }
+
+  String _getLastUpdated() {
+    var lastUpdated = DateTime.fromMillisecondsSinceEpoch(
+        (_currentCurrencyPair.lastUpdated * 1000),
+        isUtc: false);
+    var hoursMinutes = intl.DateFormat.Hm().format(lastUpdated);
+    var yearMonthDay = intl.DateFormat.yMd().format(lastUpdated);
+    return 'Last updated: $yearMonthDay $hoursMinutes';
   }
 
   void _textControllers() {
@@ -85,6 +115,7 @@ class _CurrencyPageState extends State<CurrencyPage> {
             ));
   }
 
+
   Widget _currencyWidget({
     required Currency currency,
     required bool isBaseCurrency,
@@ -102,6 +133,7 @@ class _CurrencyPageState extends State<CurrencyPage> {
                   isHint: true,
                 )),
           ),
+
           Expanded(
               flex: 1,
               child: TextField(
@@ -118,7 +150,7 @@ class _CurrencyPageState extends State<CurrencyPage> {
                   fontSize: 30,
                 ),
                 decoration: const InputDecoration(
-                  border: InputBorder.none,
+                    border: InputBorder.none
                 ),
                 controller: isBaseCurrency == true
                     ? _baseTextEditingController
@@ -148,7 +180,7 @@ class _CurrencyPageState extends State<CurrencyPage> {
 
   Widget _currencyPair() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 25, 10, 0),
+      padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
       child: Column(
         children: [
           _currencyWidget(

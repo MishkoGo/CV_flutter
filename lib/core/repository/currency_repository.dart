@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../common/all_currencies.dart';
-import '../models/currency_model.dart';
-import '../models/currency_pair.dart';
+import '../../common/all_currencies.dart';
+import '../../models/currency_model.dart';
+import '../../models/currency_pair.dart';
 
 class CurrencyRepository {
   final _apiKey = 'ed6562f57fc2401a92f2f6f3650f5aba';

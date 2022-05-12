@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../currency_bloc/currency_bloc.dart';
+import '../../bloc/currency_bloc/currency_bloc.dart';
+import '../../core/repository/currency_repository.dart';
 import '../../models/currency_model.dart';
-import '../../repository/currency_repository.dart';
 import '../widgets/currency_tile.dart';
 
 class SearchCurrencyBottomSheet extends StatefulWidget {

@@ -1,7 +1,6 @@
-# Currency Converter
+# CurrencyApp
 
-First Flutter Project
--Test
+A new Flutter project.
 
 ## Getting Started
 

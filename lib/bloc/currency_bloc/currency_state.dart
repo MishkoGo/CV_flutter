@@ -23,3 +23,8 @@ class CurrencyLoadedState extends CurrencyState {
     return CurrencyLoadedState(CurrencyPair.fromJson(json['value']));
   }
 }
+
+class CurrencyFailedState extends CurrencyState {
+  final String error;
+  CurrencyFailedState({required this.error});
+}
